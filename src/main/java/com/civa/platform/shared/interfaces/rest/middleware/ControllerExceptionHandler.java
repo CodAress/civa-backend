@@ -1,9 +1,6 @@
 package com.civa.platform.shared.interfaces.rest.middleware;
 
-import com.civa.platform.shared.application.exceptions.InvalidValueException;
-import com.civa.platform.shared.application.exceptions.ResourceAlreadyException;
-import com.civa.platform.shared.application.exceptions.ResourceNotFoundException;
-import com.civa.platform.shared.application.exceptions.ValidationException;
+import com.civa.platform.shared.application.exceptions.*;
 import com.civa.platform.shared.interfaces.rest.resources.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,7 +42,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(ResourceAlreadyException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
-    public ErrorMessage resourceAlreadyException(Exception ex, WebRequest request){
+    public ErrorMessage resourceAlreadyException(ResourceAlreadyException ex, WebRequest request){
         return new ErrorMessage(
                 HttpStatus.CONFLICT.value(),
                 ex.getMessage(),
@@ -63,4 +60,13 @@ public class ControllerExceptionHandler {
         );
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    public ErrorMessage unauthorizedException(UnauthorizedException ex, WebRequest request){
+        return new ErrorMessage(
+                HttpStatus.UNAUTHORIZED.value(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+    }
 }

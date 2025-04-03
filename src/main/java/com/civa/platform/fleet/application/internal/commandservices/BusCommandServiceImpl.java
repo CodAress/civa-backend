@@ -2,6 +2,7 @@ package com.civa.platform.fleet.application.internal.commandservices;
 
 import com.civa.platform.fleet.domain.model.agregates.Bus;
 import com.civa.platform.fleet.domain.model.commands.CreateBusCommand;
+import com.civa.platform.fleet.domain.model.valueobjects.BusFeatures;
 import com.civa.platform.fleet.domain.model.valueobjects.BusNumber;
 import com.civa.platform.fleet.domain.model.valueobjects.BusStatus;
 import com.civa.platform.fleet.domain.model.valueobjects.LicensePlate;
@@ -47,7 +48,7 @@ public class BusCommandServiceImpl implements BusCommandService {
                 .orElseThrow(() -> new ResourceNotFoundException("Bus brand not found"));
 
         var busStatus = BusStatus.fromString(command.status());
-        var bus = new Bus(new BusNumber(command.number()), new LicensePlate(command.licensePlate()), busBrand, busStatus);
+        var bus = new Bus(new BusNumber(command.number()), new LicensePlate(command.licensePlate()), busBrand, new BusFeatures(command.features()), busStatus);
 
         try {
             busRepository.save(bus);

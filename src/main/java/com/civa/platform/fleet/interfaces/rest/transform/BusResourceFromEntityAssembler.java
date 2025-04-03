@@ -10,6 +10,7 @@ public class BusResourceFromEntityAssembler {
                 bus.getNumber().number(),
                 bus.getLicensePlate().plate(),
                 bus.getBusBrand().getName().name(),
+                bus.getFeatures().features(),
                 bus.getStatus().name()
         );
     }
